@@ -48,7 +48,7 @@ NumPy
 I offer Dashboard-as-a-Service for startups, founders, and small businesses.
 
 You send me your sales CSV
-I deliver a private, interactive dashboard with insights in 48h
+I deliver a private, interactive, and catered to you dashboard with insights in 48h
 
 **For custom dashboards with your sales data, contact me on LinkedIn or email:**
 
