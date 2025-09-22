@@ -49,9 +49,10 @@ I offer Dashboard-as-a-Service for startups, founders, and small businesses.
 
 You send me your sales CSV
 I deliver a private, interactive dashboard with insights in 48h
-Pricing starts at €200
 
-**Contact**: farajh083@gmail.com
+**For custom dashboards with your sales data, contact me on LinkedIn or email:**
+
+**Email**: farajh083@gmail.com
 
 **LinkedIn**: linkedin.com/in/hadifaraj/
 
