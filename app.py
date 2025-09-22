@@ -6,7 +6,6 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="Sales Story Dashboard", layout="wide")
 
-# Load and prepare data
 @st.cache_data
 def load_data():
     df = pd.read_csv("retail_sales_dataset.csv")
@@ -19,7 +18,6 @@ df = load_data()
 st.title(" Sales Analytics Dashboard")
 st.markdown("**Professional business intelligence dashboard with advanced analytics and visualizations by Hadi Faraj**")
 
-# Key Metrics Row
 col1, col2, col3, col4 = st.columns(4)
 total_revenue = df['Total Amount'].sum()
 total_transactions = len(df)
@@ -35,7 +33,6 @@ with col3:
 with col4:
     st.metric("Product Categories", f"{unique_categories}")
 
-# Sidebar filters
 with st.sidebar:
     st.header(" Filters")
     date_min, date_max = df['Date'].min(), df['Date'].max()
@@ -53,13 +50,9 @@ with st.sidebar:
         st.cache_data.clear()
         st.rerun()
 
-# Create two columns for balanced layout
 col_left, col_right = st.columns(2)
 
-# ===== SIMPLE STANDARD CHARTS =====
-
 with col_left:
-    # 1) Simple: Daily Sales Trend
     st.subheader(" Daily Sales Trend")
     daily_sales = df.groupby('Date')['Total Amount'].sum().reset_index()
     fig1 = px.line(daily_sales, x='Date', y='Total Amount', 
@@ -77,7 +70,6 @@ with col_left:
     st.plotly_chart(fig1, use_container_width=True)
 
 with col_right:
-    # 2) Simple: Top Categories Bar Chart
     st.subheader(" Top Product Categories")
     top_cats = df.groupby('Product Category')['Total Amount'].sum().sort_values(ascending=False).head(8)
     fig2 = px.bar(x=top_cats.index, y=top_cats.values, 
@@ -93,9 +85,6 @@ with col_right:
 
 st.markdown("---")
 
-# ===== ADVANCED ANALYTICS CHARTS =====
-
-# 3) Advanced: Pareto Analysis with Dual Axis
 st.subheader(" Pareto Analysis — Revenue Concentration")
 col1, col2 = st.columns([3, 1])
 with col1:
@@ -123,7 +112,6 @@ with col2:
     st.metric("Revenue Share", f"{(cat_rev['cum_pct'].iloc[2]*100):.1f}%")
     st.metric("Concentration Risk", "High" if (cat_rev['cum_pct'].iloc[2] > 0.7) else "Medium")
 
-# 4) Advanced: Heatmap - Sales by Month and Category
 st.subheader("Sales Heatmap — Monthly Performance by Category")
 monthly_cat = df.groupby([df['Date'].dt.to_period('M'), 'Product Category'])['Total Amount'].sum().unstack(fill_value=0)
 monthly_cat.index = monthly_cat.index.astype(str)
@@ -136,12 +124,10 @@ fig4 = px.imshow(monthly_cat.T,
 fig4.update_layout(template="plotly_white", height=400, font=dict(size=12))
 st.plotly_chart(fig4, use_container_width=True)
 
-# 5) Advanced: Customer Demographics Analysis
 st.subheader(" Customer Demographics & Spending Patterns")
 col1, col2 = st.columns(2)
 
 with col1:
-    # Age distribution
     age_spending = df.groupby('Age')['Total Amount'].agg(['sum', 'count']).reset_index()
     age_spending['avg_spending'] = age_spending['sum'] / age_spending['count']
     
@@ -153,7 +139,6 @@ with col1:
     st.plotly_chart(fig5a, use_container_width=True)
 
 with col2:
-    # Gender analysis
     gender_analysis = df.groupby('Gender')['Total Amount'].agg(['sum', 'count', 'mean']).reset_index()
     gender_analysis.columns = ['Gender', 'Total_Revenue', 'Transaction_Count', 'Avg_Order_Value']
     
@@ -164,12 +149,10 @@ with col2:
     fig5b.update_layout(template="plotly_white", height=350, showlegend=False, font=dict(size=12))
     st.plotly_chart(fig5b, use_container_width=True)
 
-# 6) Advanced: Revenue Quality & Growth Analysis
 st.subheader(" Revenue Quality & Growth Trajectory")
 col1, col2 = st.columns(2)
 
 with col1:
-    # Price elasticity analysis - Quantity vs Price per Unit
     price_analysis = df.groupby('Product Category')[['Total Amount', 'Quantity']].sum()
     price_analysis['price_per_unit'] = price_analysis['Total Amount'] / price_analysis['Quantity']
     price_analysis = price_analysis.reset_index()
@@ -184,7 +167,6 @@ with col1:
     st.plotly_chart(fig6a, use_container_width=True)
 
 with col2:
-    # Growth consistency analysis
     cat_month = df.groupby(['Product Category', df['Date'].dt.to_period('M')])['Total Amount'].sum().reset_index()
     cat_month['prev_month'] = cat_month.groupby('Product Category')['Total Amount'].shift(1)
     cat_month['growth_rate'] = (cat_month['Total Amount'] - cat_month['prev_month']) / cat_month['prev_month']
@@ -201,7 +183,6 @@ with col2:
     fig6b.update_layout(template="plotly_white", height=400, yaxis=dict(range=[0, 1]), font=dict(size=12))
     st.plotly_chart(fig6b, use_container_width=True)
 
-# Summary insights
 st.markdown("---")
 st.subheader(" Key Insights Summary")
 col1, col2, col3 = st.columns(3)
