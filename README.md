@@ -57,3 +57,23 @@ I deliver a private, interactive, and catered to you dashboard with insights in 
 **LinkedIn**: linkedin.com/in/hadifaraj/
 
 **Built by Hadi Faraj – AI & Data Science @ Aivancity**
+
+# Sales Analytics Dashboard
+
+Deploying to Streamlit Community Cloud:
+
+1. Ensure these files exist in repo root:
+   - `app.py`
+   - `requirements.txt`
+2. Recommended Python version: 3.10–3.12.
+3. Required Python dependencies are pinned in `requirements.txt`.
+
+Local run:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
+python -m pip install -U pip
+pip install -r requirements.txt
+streamlit run app.py
+```
